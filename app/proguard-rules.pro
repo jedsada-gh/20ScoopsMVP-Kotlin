@@ -41,6 +41,7 @@
 -keepattributes Signature
 
 -dontwarn sun.misc.**
+-dontnote sun.misc.Unsafe
 
 # Parceler library
 -keep interface org.parceler.Parcel

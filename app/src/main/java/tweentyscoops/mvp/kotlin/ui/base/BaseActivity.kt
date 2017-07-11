@@ -6,12 +6,10 @@ import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
 import tweentyscoops.mvp.kotlin.ui.exception.MvpPresenterNotCreateException
-import javax.inject.Inject
 
 abstract class BaseActivity<out P : BaseContract.Presenter<*>> : AppCompatActivity(),
         BaseContract.View {
 
-    @Inject
     private var presenter: P? = null
 
     @LayoutRes
@@ -32,7 +30,7 @@ abstract class BaseActivity<out P : BaseContract.Presenter<*>> : AppCompatActivi
         if (layoutToInflate() == 0) throw MvpNotSetLayoutException()
         setContentView(layoutToInflate())
         presenter = createPresenter()
-        presenter?.attachView(this)
+//        presenter?.attachView(this)
         bindView()
         setupInstance()
         setupView()

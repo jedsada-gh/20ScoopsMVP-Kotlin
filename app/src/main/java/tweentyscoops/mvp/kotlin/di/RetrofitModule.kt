@@ -18,7 +18,6 @@ class RetrofitModule {
 
     companion object {
         const val TIME_OUT = 60
-        const val ENDPOINT = ""
     }
 
     @Provides
@@ -27,8 +26,8 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(config: BuildConfiguration, httpClient: OkHttpClient.Builder): OkHttpClient {
-        if (config.isDebug()) {
+    fun provideOkHttpClient(configuration: BuildConfiguration, httpClient: OkHttpClient.Builder): OkHttpClient {
+        if (configuration.isDebug()) {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             httpClient.addInterceptor(httpLoggingInterceptor)
@@ -43,9 +42,10 @@ class RetrofitModule {
         httpClient.addInterceptor { chain ->
             val original = chain.request()
             val requestBuilder = original.newBuilder()
-            if (config.userToken() != null) requestBuilder.header("Authorization", config.userToken())
-            requestBuilder.header("device", "android")
-            requestBuilder.header("appversion", config.version())
+            if (configuration.userToken() != null)
+                requestBuilder.header("Authorization", configuration.userToken())
+            requestBuilder.header("device", configuration.deviceType())
+            requestBuilder.header("appversion", configuration.version())
             requestBuilder.method(original.method(), original.body())
             val request = requestBuilder.build()
             chain.proceed(request)
@@ -55,12 +55,11 @@ class RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson, httpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(ENDPOINT)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(httpClient)
-                .build()
-    }
+    fun provideRetrofit(configuration: BuildConfiguration, gson: Gson, httpClient: OkHttpClient): Retrofit =
+            Retrofit.Builder()
+                    .baseUrl(configuration.endPoint())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(httpClient)
+                    .build()
 }

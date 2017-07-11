@@ -8,18 +8,48 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
-
         applicationId "tweentyscoops.mvp.kotlin"
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        buildConfigField("String", "DEVICE_TYEP", '"android"')
     }
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+//    signingConfigs {
+//        release {
+//            storeFile file("twentyscoops.jks")
+//            storePassword "twentyscoops"
+//            keyAlias "twentyscoops"
+//            keyPassword "twentyscoops"
+//        }
+//    }
+    productFlavors {
+        production {
+            buildConfigField("String", "SERVER", '"https://api.github.com/"')
+        }
+
+        staging {
+            applicationIdSuffix '.staging'
+            versionNameSuffix "-STAGING"
+            buildConfigField("String", "SERVER", '"https://api.github.com/"')
+        }
+
+        develop {
+            applicationIdSuffix '.dev'
+            versionNameSuffix "-DEV"
+            buildConfigField("String", "SERVER", '"https://api.github.com/"')
         }
     }
 }
@@ -60,6 +90,10 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:' + rootProject.ext.glide_version
     kapt 'com.github.bumptech.glide:compiler:' + rootProject.ext.glide_version
+
+    compile('com.hwangjr.rxbus:rxbus:2.0.0') {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
 }
 
 configurations.all {
@@ -70,4 +104,30 @@ configurations.all {
 
 repositories {
     mavenCentral()
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut"
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+
+        debug {
+            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "full"
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
 }
