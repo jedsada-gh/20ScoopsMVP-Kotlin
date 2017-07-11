@@ -8,7 +8,7 @@ class MainContract {
         fun test()
     }
 
-    interface Presenter : BaseContract.Presenter<MainContract.View> {
+    interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun test()
     }
 }

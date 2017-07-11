@@ -1,4 +1,4 @@
-package tweentyscoops.mvp.kotlin.di
+package tweentyscoops.mvp.kotlin.di.module
 
 import dagger.Module
 

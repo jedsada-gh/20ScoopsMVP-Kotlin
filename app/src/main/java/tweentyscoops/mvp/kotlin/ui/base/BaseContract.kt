@@ -5,7 +5,6 @@ import android.support.annotation.StringRes
 open class BaseContract {
 
     interface View {
-        fun getPresenter(): Presenter<*>
         fun showProgressDialog()
         fun hideProgressDialog()
         fun showError(message: String)
@@ -18,7 +17,7 @@ open class BaseContract {
     interface Presenter<V : BaseContract.View> {
         fun attachView(view: V)
         fun detachView()
-        fun getView(): V
+        fun getView(): V?
         fun onViewCreate()
         fun onViewDestroy()
         fun onViewStart()

@@ -4,23 +4,22 @@ import tweentyscoops.mvp.kotlin.api.BaseResponseCallback
 import tweentyscoops.mvp.kotlin.ui.exception.MvpViewNotAttachedException
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<V : BaseContract.View> : BaseResponseCallback,
-        BaseContract.Presenter<V> {
+abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V>,
+        BaseResponseCallback {
 
-    private var view: WeakReference<V>? = null
+    private var viewRef: WeakReference<V>? = null
 
     override fun attachView(view: V) {
-        this.view = WeakReference<V>(view)
+        this.viewRef = WeakReference<V>(view)
     }
 
     override fun detachView() {
-        this.view = null
+        viewRef?.clear()
+        viewRef = null
     }
 
-    override fun getView(): V = when (view) {
-        null -> throw MvpViewNotAttachedException()
-        else -> view?.get()!!
-    }
+    override fun getView(): V? = if (viewRef == null) throw MvpViewNotAttachedException()
+    else viewRef?.get()
 
     override fun onViewCreate() {
 
@@ -39,7 +38,7 @@ abstract class BasePresenter<V : BaseContract.View> : BaseResponseCallback,
     }
 
     override fun onUnAuthorized() {
-        view?.get()?.hideProgressDialog()
-        view?.get()?.unAuthorizedApi()
+        viewRef?.get()?.hideProgressDialog()
+        viewRef?.get()?.unAuthorizedApi()
     }
 }

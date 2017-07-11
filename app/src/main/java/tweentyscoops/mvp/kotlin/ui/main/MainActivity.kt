@@ -9,13 +9,18 @@ import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 import javax.inject.Inject
 
-class MainActivity : BaseActivity<MainContract.View, MainPresenter>() {
+class MainActivity : BaseActivity<MainContract.View, MainPresenter>() , MainContract.View {
+
+    override fun test() {
+        toast("Test")
+
+    }
 
     @Inject
     lateinit var gson: Gson
 
     @Inject
-    lateinit var spf : SharedPreferences
+    lateinit var spf: SharedPreferences
 
     override fun layoutToInflate() = R.layout.activity_main
 
@@ -25,7 +30,7 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>() {
 
     override fun startView() {
         toast("")
-        getPresenter().onViewStop()
+        presenter.onViewStop()
     }
 
     override fun stopView() {
@@ -33,7 +38,7 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>() {
     }
 
     override fun bindView() {
-
+        presenter.test()
     }
 
     override fun setupInstance() {

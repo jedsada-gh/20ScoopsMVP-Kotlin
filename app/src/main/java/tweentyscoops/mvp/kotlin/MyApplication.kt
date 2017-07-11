@@ -4,13 +4,16 @@ import android.app.Application
 import android.os.Build
 import android.os.StrictMode
 import timber.log.Timber
-import tweentyscoops.mvp.kotlin.di.*
-
+import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.di.DaggerApplicationComponent
+import tweentyscoops.mvp.kotlin.di.module.AndroidModule
+import tweentyscoops.mvp.kotlin.di.module.ApiModule
+import tweentyscoops.mvp.kotlin.di.module.RetrofitModule
 
 class MyApplication : Application() {
 
     companion object {
-        lateinit var appComponent: ApplicationComponent
+        @JvmStatic lateinit var appComponent: ApplicationComponent
     }
 
     override fun onCreate() {

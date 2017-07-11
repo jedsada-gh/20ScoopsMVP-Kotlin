@@ -8,18 +8,18 @@ import tweentyscoops.mvp.kotlin.MyApplication
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
+import javax.inject.Inject
 
-@Suppress("UNCHECKED_CAST")
-abstract class BaseActivity<in V : BaseContract.View, out P : BasePresenter<in V>> :
-        AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>>
+    : AppCompatActivity(), BaseContract.View {
 
-    //    @Inject
-    private lateinit var presenter: P
+    @Inject
+    protected lateinit var presenter: P
 
     @LayoutRes
     protected abstract fun layoutToInflate(): Int
 
-    abstract fun doInjection(appComponent: ApplicationComponent)
+    protected abstract fun doInjection(appComponent: ApplicationComponent)
     protected abstract fun startView()
     protected abstract fun stopView()
     protected abstract fun bindView()
@@ -29,6 +29,7 @@ abstract class BaseActivity<in V : BaseContract.View, out P : BasePresenter<in V
     protected abstract fun saveInstanceState(outState: Bundle?)
     protected abstract fun restoreView(savedInstanceState: Bundle?)
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (layoutToInflate() == 0) throw MvpNotSetLayoutException()
@@ -38,7 +39,7 @@ abstract class BaseActivity<in V : BaseContract.View, out P : BasePresenter<in V
         bindView()
         setupInstance()
         setupView()
-        getPresenter().onViewCreate()
+        presenter.onViewCreate()
         if (savedInstanceState == null) initialize()
     }
 
@@ -63,8 +64,6 @@ abstract class BaseActivity<in V : BaseContract.View, out P : BasePresenter<in V
         super.onRestoreInstanceState(savedInstanceState)
         restoreView(savedInstanceState)
     }
-
-    override fun getPresenter(): P = presenter
 
     override fun showProgressDialog() {
 
