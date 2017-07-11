@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 26
@@ -26,11 +29,39 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     testCompile 'junit:junit:4.12'
+    testCompile "com.nhaarman:mockito-kotlin:" + rootProject.ext.mockito_version
+    testCompile 'org.hamcrest:hamcrest-all:' + rootProject.ext.hamcrest_version
+
+    compile 'com.android.support:appcompat-v7:' + rootProject.ext.support_version
+    compile 'com.android.support:design:' + rootProject.ext.support_version
+    compile 'com.android.support:cardview-v7:' + rootProject.ext.support_version
+
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    compile 'com.google.dagger:dagger:' + rootProject.ext.dagger2_version
+    kapt 'com.google.dagger:dagger-compiler:' + rootProject.ext.dagger2_version
+    provided 'javax.annotation:jsr250-api:1.0'
+
+    compile 'com.google.code.gson:gson:' + rootProject.ext.gson_version
+    compile 'io.reactivex.rxjava2:rxandroid:' + rootProject.ext.rx_android_version
+    compile 'io.reactivex.rxjava2:rxkotlin:' + rootProject.ext.rx_version
+
+    compile 'com.squareup.retrofit2:retrofit:' + rootProject.ext.retrofit_version
+    compile 'com.squareup.retrofit2:converter-gson:' + rootProject.ext.retrofit_version
+    compile 'com.squareup.retrofit2:adapter-rxjava2:' + rootProject.ext.retrofit_version
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
+    compile 'com.jakewharton.timber:timber:4.5.1'
 }
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
+
 repositories {
     mavenCentral()
 }
