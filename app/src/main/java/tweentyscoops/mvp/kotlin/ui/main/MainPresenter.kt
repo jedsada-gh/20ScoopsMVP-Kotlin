@@ -1,8 +1,10 @@
 package tweentyscoops.mvp.kotlin.ui.main
 
+import com.google.gson.Gson
 import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
+import javax.inject.Inject
 
-class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter {
+class MainPresenter(@Inject var gson: Gson) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
     override fun test() {
 
