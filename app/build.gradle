@@ -54,6 +54,12 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
     compile 'com.jakewharton.timber:timber:4.5.1'
+
+    compile 'org.parceler:parceler-api:' + rootProject.ext.parceler_version
+    kapt 'org.parceler:parceler:' + rootProject.ext.parceler_version
+
+    compile 'com.github.bumptech.glide:glide:' + rootProject.ext.glide_version
+    kapt 'com.github.bumptech.glide:compiler:' + rootProject.ext.glide_version
 }
 
 configurations.all {

@@ -17,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="tweentyscoops.mvp.kotlin.configuration.GlideConfiguration"
+            android:value="GlideModule" />
     </application>
 
 </manifest>
