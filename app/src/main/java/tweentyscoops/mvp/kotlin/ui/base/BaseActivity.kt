@@ -4,33 +4,37 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
+import tweentyscoops.mvp.kotlin.MyApplication
+import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
-import tweentyscoops.mvp.kotlin.ui.exception.MvpPresenterNotCreateException
 
-abstract class BaseActivity<out P : BaseContract.Presenter<*>> : AppCompatActivity(),
-        BaseContract.View {
+@Suppress("UNCHECKED_CAST")
+abstract class BaseActivity<in V : BaseContract.View, out P : BasePresenter<in V>> :
+        AppCompatActivity(), BaseContract.View {
 
-    private var presenter: P? = null
+    //    @Inject
+    private lateinit var presenter: P
 
     @LayoutRes
     protected abstract fun layoutToInflate(): Int
 
-    protected abstract fun createPresenter(): P
+    abstract fun doInjection(appComponent: ApplicationComponent)
     protected abstract fun startView()
     protected abstract fun stopView()
     protected abstract fun bindView()
     protected abstract fun setupInstance()
     protected abstract fun setupView()
     protected abstract fun initialize()
-    protected abstract fun saveInstanceState(outState: Bundle)
-    protected abstract fun restoreView(savedInstanceState: Bundle)
+    protected abstract fun saveInstanceState(outState: Bundle?)
+    protected abstract fun restoreView(savedInstanceState: Bundle?)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (layoutToInflate() == 0) throw MvpNotSetLayoutException()
         setContentView(layoutToInflate())
-        presenter = createPresenter()
-//        presenter?.attachView(this)
+        doInjection((application as MyApplication).component())
+        presenter.attachView(this as V)
         bindView()
         setupInstance()
         setupView()
@@ -52,17 +56,15 @@ abstract class BaseActivity<out P : BaseContract.Presenter<*>> : AppCompatActivi
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        saveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
+        restoreView(savedInstanceState)
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun getPresenter(): P {
-        if (presenter != null) return presenter as P
-        throw MvpPresenterNotCreateException()
-    }
+    override fun getPresenter(): P = presenter
 
     override fun showProgressDialog() {
 
@@ -72,20 +74,20 @@ abstract class BaseActivity<out P : BaseContract.Presenter<*>> : AppCompatActivi
 
     }
 
-    override fun showError(errorMessage: String) {
-
+    override fun showError(message: String) {
+        toast(message)
     }
 
-    override fun showError(@StringRes errorMessage: Int) {
-
+    override fun showError(@StringRes message: Int) {
+        toast(message)
     }
 
     override fun showMessage(message: String) {
-
+        toast(message)
     }
 
     override fun showMessage(@StringRes message: Int) {
-
+        toast(message)
     }
 
     override fun unAuthorizedApi() {

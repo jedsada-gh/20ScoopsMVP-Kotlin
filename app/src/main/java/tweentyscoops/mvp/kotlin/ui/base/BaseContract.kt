@@ -4,10 +4,6 @@ import android.support.annotation.StringRes
 
 open class BaseContract {
 
-    interface UnAuthorizedCallback {
-        fun onUnAuthorized()
-    }
-
     interface View {
         fun getPresenter(): Presenter<*>
         fun showProgressDialog()

@@ -1,8 +1,10 @@
 package tweentyscoops.mvp.kotlin.di
 
+import android.app.Application
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +28,13 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(configuration: BuildConfiguration, httpClient: OkHttpClient.Builder): OkHttpClient {
+    fun provideHttpCache(application: Application): Cache =
+            Cache(application.cacheDir, (10 * 1024 * 1024).toLong())
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(configuration: BuildConfiguration, cache: Cache,
+                            httpClient: OkHttpClient.Builder): OkHttpClient {
         if (configuration.isDebug()) {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -45,12 +53,12 @@ class RetrofitModule {
             if (configuration.userToken() != null)
                 requestBuilder.header("Authorization", configuration.userToken())
             requestBuilder.header("device", configuration.deviceType())
-            requestBuilder.header("appversion", configuration.version())
+            requestBuilder.header("app_version", configuration.version())
             requestBuilder.method(original.method(), original.body())
             val request = requestBuilder.build()
             chain.proceed(request)
         }
-        return httpClient.build()
+        return httpClient.cache(cache).build()
     }
 
     @Singleton

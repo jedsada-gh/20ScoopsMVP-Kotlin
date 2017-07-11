@@ -2,7 +2,6 @@ package tweentyscoops.mvp.kotlin.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -12,15 +11,8 @@ import tweentyscoops.mvp.kotlin.configuration.BuildConfiguration
 import tweentyscoops.mvp.kotlin.configuration.Config
 import javax.inject.Singleton
 
-
 @Module
-class AndroidModule {
-
-    private var application: MyApplication? = null
-
-    fun AndroidModule(application: MyApplication) {
-        this.application = application
-    }
+class AndroidModule(var application: MyApplication) {
 
     @Provides
     @Singleton
@@ -33,10 +25,10 @@ class AndroidModule {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
 
-    @Provides
     @Singleton
-    fun providesSharedPreferences(context: Context): SharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(context)
+    @Provides
+    fun provideSharedPreferences(): SharedPreferences =
+            application.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
 
     @Provides
     @Singleton

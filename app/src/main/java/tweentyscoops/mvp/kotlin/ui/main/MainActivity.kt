@@ -1,14 +1,58 @@
 package tweentyscoops.mvp.kotlin.ui.main
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.google.gson.Gson
 import tweentyscoops.mvp.kotlin.R
+import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainContract.View, MainPresenter>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    @Inject
+    lateinit var gson: Gson
+
+    @Inject
+    lateinit var spf : SharedPreferences
+
+    override fun layoutToInflate() = R.layout.activity_main
+
+    override fun doInjection(appComponent: ApplicationComponent) {
+        appComponent.inject(this)
+    }
+
+    override fun startView() {
+        toast("")
+        getPresenter().onViewStop()
+    }
+
+    override fun stopView() {
+
+    }
+
+    override fun bindView() {
+
+    }
+
+    override fun setupInstance() {
+
+    }
+
+    override fun setupView() {
+
+    }
+
+    override fun initialize() {
+
+    }
+
+    override fun saveInstanceState(outState: Bundle?) {
+
+    }
+
+    override fun restoreView(savedInstanceState: Bundle?) {
+
     }
 }
