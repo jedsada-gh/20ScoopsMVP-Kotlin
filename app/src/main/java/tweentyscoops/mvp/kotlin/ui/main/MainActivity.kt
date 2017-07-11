@@ -13,7 +13,6 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>() , MainCont
 
     override fun test() {
         toast("Test")
-
     }
 
     @Inject

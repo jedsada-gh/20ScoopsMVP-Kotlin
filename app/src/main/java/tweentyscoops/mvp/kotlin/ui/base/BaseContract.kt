@@ -3,7 +3,6 @@ package tweentyscoops.mvp.kotlin.ui.base
 import android.support.annotation.StringRes
 
 open class BaseContract {
-
     interface View {
         fun showProgressDialog()
         fun hideProgressDialog()
