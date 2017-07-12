@@ -1,11 +1,14 @@
 package tweentyscoops.mvp.kotlin.ui.main
 
+import com.google.gson.Gson
+import com.hwangjr.rxbus.RxBus
 import tweentyscoops.mvp.kotlin.api.BaseSubscriber
+import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.api.repository.GithupRepostitory
 import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(val githubRepos: GithupRepostitory) :
+class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupRepostitory) :
         BasePresenter<MainContract.View>(), MainContract.Presenter<MainContract.View>,
         BaseSubscriber.ResponseCallback {
 
@@ -14,10 +17,19 @@ class MainPresenter @Inject constructor(val githubRepos: GithupRepostitory) :
     }
 
     override fun <T> onSuccess(t: T) {
-        getView()?.test()
+        getView()?.test(t as? UserInfoDao)
     }
 
     override fun onError(message: String?) {
 
+    }
+
+    override fun onViewStart() {
+        RxBus.get().register(this)
+    }
+
+    override fun onViewStop() {
+        super.onViewStop()
+        RxBus.get().unregister(this)
     }
 }

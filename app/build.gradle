@@ -61,8 +61,10 @@ dependencies {
     })
 
     testCompile 'junit:junit:4.12'
-    testCompile "com.nhaarman:mockito-kotlin:" + rootProject.ext.mockito_version
-    testCompile 'org.hamcrest:hamcrest-all:' + rootProject.ext.hamcrest_version
+    testCompile 'org.hamcrest:hamcrest-library:' + rootProject.ext.hamcrest_version
+    testCompile 'org.powermock:powermock-api-mockito:' + rootProject.ext.powermock_version
+    testCompile 'org.powermock:powermock-module-junit4:' + rootProject.ext.powermock_version
+    testCompile 'org.powermock:powermock-core:' + rootProject.ext.powermock_version
 
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.support_version
     compile 'com.android.support:design:' + rootProject.ext.support_version

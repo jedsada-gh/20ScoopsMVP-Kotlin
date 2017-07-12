@@ -25,16 +25,16 @@ abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V>,
 
     }
 
-    override fun onViewDestroy() {
-
-    }
-
     override fun onViewStart() {
 
     }
 
-    override fun onViewStop() {
+    override fun onViewDestroy() {
+        viewRef?.get()?.showProgressDialog()
+    }
 
+    override fun onViewStop() {
+        viewRef?.get()?.showProgressDialog()
     }
 
     override fun onUnAuthorized() {

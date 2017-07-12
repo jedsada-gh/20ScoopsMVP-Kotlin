@@ -1,14 +1,25 @@
 package tweentyscoops.mvp.kotlin.ui.main
 
-import com.nhaarman.mockito_kotlin.*
+import com.google.gson.Gson
+import com.hwangjr.rxbus.Bus
+import com.hwangjr.rxbus.RxBus
 import io.reactivex.Observable
-import org.junit.Assert
-import org.junit.Before
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.mockito.Matchers.anyString
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.powermock.api.mockito.PowerMockito
+import org.powermock.api.mockito.PowerMockito.`when`
+import org.powermock.api.mockito.PowerMockito.mockStatic
+import org.powermock.core.classloader.annotations.PrepareForTest
+import org.powermock.modules.junit4.PowerMockRunner
 import retrofit2.Response
 import tweentyscoops.mvp.kotlin.JsonMockUtility
 import tweentyscoops.mvp.kotlin.RxSchedulersOverrideRule
@@ -16,32 +27,52 @@ import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.api.repository.GithubApi
 import tweentyscoops.mvp.kotlin.api.repository.GithupRepostitory
 
-@RunWith(JUnit4::class)
+@RunWith(PowerMockRunner::class)
+@PrepareForTest(RxBus::class, Gson::class)
 class MainPresenterTest {
 
     @Rule @JvmField val rxSchedulerRule = RxSchedulersOverrideRule()
 
-    private val mockGithubApi = mock<GithubApi> { }
-    private val mockView = mock<MainContract.View>()
-    private val githubRepos = GithupRepostitory(mockGithubApi)
-    private val spyGithubRepos = spy(githubRepos)
+    @Mock private lateinit var mockGithubApi: GithubApi
+    @Mock private lateinit var mockView: MainContract.View
+    @Mock private lateinit var bus: Bus
 
+    @Mock private lateinit var mockGson: Gson
+
+    private var githubRepos: GithupRepostitory
+    private var spyGithubRepos: GithupRepostitory
     private val jsonMockUtility = JsonMockUtility()
-    private val presenter = MainPresenter(githubRepos)
+    private var presenter: MainPresenter
 
-    @Before
-    fun setUp() {
+    init {
         MockitoAnnotations.initMocks(this)
+        mockStatic(RxBus::class.java)
+        githubRepos = GithupRepostitory(mockGithubApi)
+        spyGithubRepos = PowerMockito.spy(githubRepos)
+        presenter = MainPresenter(mockGson, githubRepos)
         presenter.attachView(mockView)
+        `when`(RxBus.get()).thenReturn(bus)
+    }
+
+    @Test
+    fun registerRxBus() {
+        presenter.onViewStart()
+        verify(RxBus.get(), times(1)).register(presenter)
+    }
+
+    @Test
+    fun unRegisterRxBus() {
+        presenter.onViewStop()
+        verify(RxBus.get(), times(1)).unregister(presenter)
     }
 
     @Test
     fun requestGithubApiUserInfo_should_be_success() {
         val mockResult = jsonMockUtility.getJsonToMock("user_info_success.json", UserInfoDao::class.java)
         val mockResponse = Response.success(mockResult)
-        Assert.assertEquals(mockResult.username, "PondThaitay")
+        assertThat(mockResult.username, `is`("PondThaitay"))
         val mockObservable = Observable.just(mockResponse)
-        whenever(spyGithubRepos.observableUserInfo(anyVararg())).thenReturn(mockObservable)
+        PowerMockito.`when`(spyGithubRepos.observableUserInfo(Mockito.anyString())).thenReturn(mockObservable)
         presenter.test()
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()
@@ -50,14 +81,14 @@ class MainPresenterTest {
         testObserver.assertValueCount(1)
         testObserver.assertResult(mockResponse)
         testObserver.assertValue { return@assertValue it.body() == mockResponse.body() }
-        verify(mockView, times(1)).test()
+        verify(mockView, times(1)).test(mockResult)
     }
 
     @Test
     fun requestGithubApiUserInfo_should_be_error() {
         val throwable = Throwable("error")
         val mockObservable = Observable.error<Response<UserInfoDao>>(throwable)
-        whenever(spyGithubRepos.observableUserInfo(anyVararg())).thenReturn(mockObservable)
+        `when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
         presenter.test()
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()

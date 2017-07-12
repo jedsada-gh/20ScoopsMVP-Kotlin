@@ -3,6 +3,7 @@ package tweentyscoops.mvp.kotlin.ui.main
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import tweentyscoops.mvp.kotlin.R
+import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.extensions.hide
 import tweentyscoops.mvp.kotlin.extensions.loadImage
@@ -12,15 +13,11 @@ import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 
 class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
 
-    override fun test() {
-        toast("Test")
-    }
+    override fun test(userInfoDao: UserInfoDao?) = toast(userInfoDao?.name!!)
 
     override fun layoutToInflate() = R.layout.activity_main
 
-    override fun doInjection(appComponent: ApplicationComponent) {
-        appComponent.inject(this)
-    }
+    override fun doInjection(appComponent: ApplicationComponent) = appComponent.inject(this)
 
     override fun startView() {
         toast("")

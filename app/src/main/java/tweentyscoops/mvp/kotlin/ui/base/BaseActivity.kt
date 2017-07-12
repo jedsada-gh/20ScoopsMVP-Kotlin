@@ -45,14 +45,20 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
 
     override fun onStart() {
         super.onStart()
+        startView()
+        presenter.onViewStart()
     }
 
     override fun onStop() {
         super.onStop()
+        stopView()
+        presenter.onViewStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter.onViewDestroy()
+        presenter.detachView()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
