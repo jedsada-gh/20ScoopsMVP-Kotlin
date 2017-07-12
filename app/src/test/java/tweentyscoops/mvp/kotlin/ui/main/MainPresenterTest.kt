@@ -15,9 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
-import org.powermock.api.mockito.PowerMockito
-import org.powermock.api.mockito.PowerMockito.`when`
-import org.powermock.api.mockito.PowerMockito.mockStatic
+import org.powermock.api.mockito.PowerMockito.*
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.PowerMockRunner
 import retrofit2.Response
@@ -47,7 +45,7 @@ class MainPresenterTest {
         MockitoAnnotations.initMocks(this)
         mockStatic(RxBus::class.java)
         githubRepos = GithupRepostitory(mockGithubApi)
-        spyGithubRepos = PowerMockito.spy(githubRepos)
+        spyGithubRepos = spy(githubRepos)
         presenter = MainPresenter(mockGson, githubRepos)
         presenter.attachView(mockView)
         `when`(RxBus.get()).thenReturn(bus)
@@ -71,7 +69,7 @@ class MainPresenterTest {
         val mockResponse = Response.success(mockResult)
         assertThat(mockResult.username, `is`("PondThaitay"))
         val mockObservable = Observable.just(mockResponse)
-        PowerMockito.`when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
+        `when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
         presenter.requestUserInfo("pondthaitay")
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()
@@ -87,9 +85,9 @@ class MainPresenterTest {
     fun requestGithubApiUserInfo_should_be_empty() {
         val mockResult = jsonMockUtility.getJsonToMock("user_info_success_empty.json", UserInfoDao::class.java)
         val mockResponse = Response.success(mockResult)
-        Assert.assertNull(mockResult.username)
+        Assert.assertThat(mockResult.username, `is`(""))
         val mockObservable = Observable.just(mockResponse)
-        PowerMockito.`when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
+        `when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
         presenter.requestUserInfo("pondthaitay")
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()
