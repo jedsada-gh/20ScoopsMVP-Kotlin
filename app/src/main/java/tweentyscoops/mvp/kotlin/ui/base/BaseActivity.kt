@@ -10,8 +10,8 @@ import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
 import javax.inject.Inject
 
-abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>>
-    : AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>> :
+        AppCompatActivity(), BaseContract.View {
 
     @Inject
     protected lateinit var presenter: P

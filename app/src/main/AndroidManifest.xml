@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tweentyscoops.mvp.kotlin">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -20,7 +22,7 @@
 
         <meta-data
             android:name="tweentyscoops.mvp.kotlin.configuration.GlideConfiguration"
-            android:value="GlideModule" />
+            android:value="AppGlideModule" />
     </application>
 
 </manifest>

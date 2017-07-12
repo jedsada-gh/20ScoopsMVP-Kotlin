@@ -3,13 +3,17 @@ package tweentyscoops.mvp.kotlin.ui.main
 import android.content.SharedPreferences
 import android.os.Bundle
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_main.*
 import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.extensions.hide
+import tweentyscoops.mvp.kotlin.extensions.loadImage
+import tweentyscoops.mvp.kotlin.extensions.title
 import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 import javax.inject.Inject
 
-class MainActivity : BaseActivity<MainContract.View, MainPresenter>() , MainContract.View {
+class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
 
     override fun test() {
         toast("Test")
@@ -29,7 +33,6 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>() , MainCont
 
     override fun startView() {
         toast("")
-        presenter.onViewStop()
     }
 
     override fun stopView() {
@@ -45,7 +48,9 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>() , MainCont
     }
 
     override fun setupView() {
-
+        tv_result title "Test Title"
+        tv_result.hide()
+        img_test loadImage "http://ainhoaweb.es/wp-content/uploads/2016/01/Gatos-y-perros-graciosos-26.jpg"
     }
 
     override fun initialize() {
