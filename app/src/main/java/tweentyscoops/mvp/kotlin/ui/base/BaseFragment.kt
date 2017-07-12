@@ -84,7 +84,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
 
     }
 
-    override fun showError(message: String) {
+    override fun showError(message: String?) {
 
     }
 
@@ -92,7 +92,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
 
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: String?) {
 
     }
 

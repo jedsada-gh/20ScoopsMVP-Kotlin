@@ -79,7 +79,7 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
 
     }
 
-    override fun showError(message: String) {
+    override fun showError(message: String?) {
         toast(message)
     }
 
@@ -87,7 +87,7 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
         toast(message)
     }
 
-    override fun showMessage(message: String) {
+    override fun showMessage(message: String?) {
         toast(message)
     }
 

@@ -6,9 +6,9 @@ open class BaseContract {
     interface View {
         fun showProgressDialog()
         fun hideProgressDialog()
-        fun showError(message: String)
+        fun showError(message: String?)
         fun showError(@StringRes message: Int)
-        fun showMessage(message: String)
+        fun showMessage(message: String?)
         fun showMessage(@StringRes message: Int)
         fun unAuthorizedApi()
     }

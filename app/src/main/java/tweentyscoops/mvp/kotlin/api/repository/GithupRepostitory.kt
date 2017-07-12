@@ -12,10 +12,10 @@ open class GithupRepostitory(private val githubApi: GithubApi) {
     fun observableUserInfo(username: String?): Observable<Response<UserInfoDao>> =
             githubApi.getUnserInfo(username)
 
-    fun requestUserInfo(username: String?, callback: BaseSubscriber.ResponseCallback) {
+    fun requestUserInfo(username: String?, callback: BaseSubscriber.ResponseCallback<UserInfoDao>) {
         observableUserInfo(username)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(BaseSubscriber<UserInfoDao>(callback))
+                .subscribe(BaseSubscriber(callback))
     }
 }

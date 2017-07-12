@@ -22,7 +22,7 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
     override fun doInjection(appComponent: ApplicationComponent) = appComponent.inject(this)
 
     override fun startView() {
-        toast("")
+
     }
 
     override fun stopView() {

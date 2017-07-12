@@ -10,27 +10,27 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupRepostitory) :
         BasePresenter<MainContract.View>(), MainContract.Presenter<MainContract.View>,
-        BaseSubscriber.ResponseCallback {
+        BaseSubscriber.ResponseCallback<UserInfoDao> {
 
     override fun requestUserInfo(username: String?) {
         githubRepos.requestUserInfo(username, this)
     }
 
-    override fun <T> onSuccess(t: T) {
-        val userInfo = t as? UserInfoDao
-        getView()?.userInfoData(userInfo)
-    }
-
-    override fun onError(message: String?) {
-
-    }
-
     override fun onViewStart() {
+        super.onViewStart()
         RxBus.get().register(this)
     }
 
     override fun onViewStop() {
         super.onViewStop()
         RxBus.get().unregister(this)
+    }
+
+    override fun onSuccess(t: UserInfoDao?) {
+        getView()?.userInfoData(t)
+    }
+
+    override fun onError(message: String?) {
+        getView()?.showError(message)
     }
 }
