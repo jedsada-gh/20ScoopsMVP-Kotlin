@@ -11,6 +11,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupRepostitory) :
         BasePresenter<MainContract.View>(), MainContract.Presenter<MainContract.View>,
         BaseSubscriber.ResponseCallback {
+
     override fun requestUserInfo(username: String?) {
         githubRepos.requestUserInfo(username, this)
     }
