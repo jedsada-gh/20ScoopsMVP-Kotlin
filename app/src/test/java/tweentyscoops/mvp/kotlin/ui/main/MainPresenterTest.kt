@@ -6,12 +6,12 @@ import com.hwangjr.rxbus.RxBus
 import io.reactivex.Observable
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Matchers.anyString
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
@@ -36,7 +36,6 @@ class MainPresenterTest {
     @Mock private lateinit var mockGithubApi: GithubApi
     @Mock private lateinit var mockView: MainContract.View
     @Mock private lateinit var bus: Bus
-
     @Mock private lateinit var mockGson: Gson
 
     private var githubRepos: GithupRepostitory
@@ -72,8 +71,8 @@ class MainPresenterTest {
         val mockResponse = Response.success(mockResult)
         assertThat(mockResult.username, `is`("PondThaitay"))
         val mockObservable = Observable.just(mockResponse)
-        PowerMockito.`when`(spyGithubRepos.observableUserInfo(Mockito.anyString())).thenReturn(mockObservable)
-        presenter.test()
+        PowerMockito.`when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
+        presenter.requestUserInfo("pondthaitay")
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()
         testObserver.assertNoErrors()
@@ -81,7 +80,25 @@ class MainPresenterTest {
         testObserver.assertValueCount(1)
         testObserver.assertResult(mockResponse)
         testObserver.assertValue { return@assertValue it.body() == mockResponse.body() }
-        verify(mockView, times(1)).test(mockResult)
+        verify(mockView, times(1)).userInfoData(mockResult)
+    }
+
+    @Test
+    fun requestGithubApiUserInfo_should_be_empty() {
+        val mockResult = jsonMockUtility.getJsonToMock("user_info_success_empty.json", UserInfoDao::class.java)
+        val mockResponse = Response.success(mockResult)
+        Assert.assertNull(mockResult.username)
+        val mockObservable = Observable.just(mockResponse)
+        PowerMockito.`when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
+        presenter.requestUserInfo("pondthaitay")
+        val testObserver = mockObservable.test()
+        testObserver.awaitTerminalEvent()
+        testObserver.assertNoErrors()
+        testObserver.assertComplete()
+        testObserver.assertValueCount(1)
+        testObserver.assertResult(mockResponse)
+        testObserver.assertValue { return@assertValue it.body() == mockResponse.body() }
+        verify(mockView, times(1)).userInfoData(mockResult)
     }
 
     @Test
@@ -89,7 +106,7 @@ class MainPresenterTest {
         val throwable = Throwable("error")
         val mockObservable = Observable.error<Response<UserInfoDao>>(throwable)
         `when`(spyGithubRepos.observableUserInfo(anyString())).thenReturn(mockObservable)
-        presenter.test()
+        presenter.requestUserInfo("pondthaitay")
         val testObserver = mockObservable.test()
         testObserver.awaitTerminalEvent()
         testObserver.assertNotComplete()

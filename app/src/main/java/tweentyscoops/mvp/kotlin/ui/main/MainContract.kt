@@ -6,10 +6,10 @@ import tweentyscoops.mvp.kotlin.ui.base.BaseContract
 class MainContract {
 
     interface View : BaseContract.View {
-        fun test(userInfoDao: UserInfoDao?)
+        fun userInfoData(userInfo: UserInfoDao?)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun test()
+        fun requestUserInfo(username: String?)
     }
 }

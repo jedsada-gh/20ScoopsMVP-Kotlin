@@ -13,7 +13,9 @@ import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 
 class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
 
-    override fun test(userInfoDao: UserInfoDao?) = toast(userInfoDao?.name!!)
+    override fun userInfoData(userInfo: UserInfoDao?) {
+        toast(userInfo?.name!!)
+    }
 
     override fun layoutToInflate() = R.layout.activity_main
 
@@ -28,7 +30,7 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
     }
 
     override fun bindView() {
-        presenter.test()
+        presenter.requestUserInfo("pondthaitay")
     }
 
     override fun setupInstance() {

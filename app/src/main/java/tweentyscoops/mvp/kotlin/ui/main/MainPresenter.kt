@@ -11,13 +11,13 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupRepostitory) :
         BasePresenter<MainContract.View>(), MainContract.Presenter<MainContract.View>,
         BaseSubscriber.ResponseCallback {
-
-    override fun test() {
-        githubRepos.requestUserInfo("pondthaitay", this)
+    override fun requestUserInfo(username: String?) {
+        githubRepos.requestUserInfo(username, this)
     }
 
     override fun <T> onSuccess(t: T) {
-        getView()?.test(t as? UserInfoDao)
+        val userInfo = t as? UserInfoDao
+        getView()?.userInfoData(userInfo)
     }
 
     override fun onError(message: String?) {
