@@ -37,7 +37,7 @@ android {
 //    }
     productFlavors {
         production {
-            buildConfigField("String", "SERVER", '"https://api.github.com/"')
+            buildConfigField("String", "SERVER", '"http:s//api.github.com/"')
         }
 
         staging {

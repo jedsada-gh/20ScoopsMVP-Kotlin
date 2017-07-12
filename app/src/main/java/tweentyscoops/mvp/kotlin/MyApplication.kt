@@ -13,7 +13,7 @@ import tweentyscoops.mvp.kotlin.di.module.RetrofitModule
 class MyApplication : Application() {
 
     companion object {
-        @JvmStatic lateinit var appComponent: ApplicationComponent
+        lateinit var appComponent: ApplicationComponent
     }
 
     override fun onCreate() {
@@ -37,9 +37,9 @@ class MyApplication : Application() {
 
     private fun initDependenciesInjection() {
         appComponent = DaggerApplicationComponent.builder()
-                .androidModule(AndroidModule(this))
                 .retrofitModule(RetrofitModule())
                 .apiModule(ApiModule())
+                .androidModule(AndroidModule(this))
                 .build()
     }
 }

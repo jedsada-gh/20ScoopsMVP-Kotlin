@@ -1,8 +1,6 @@
 package tweentyscoops.mvp.kotlin.ui.main
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
@@ -11,19 +9,12 @@ import tweentyscoops.mvp.kotlin.extensions.loadImage
 import tweentyscoops.mvp.kotlin.extensions.title
 import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
-import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
 
     override fun test() {
         toast("Test")
     }
-
-    @Inject
-    lateinit var gson: Gson
-
-    @Inject
-    lateinit var spf: SharedPreferences
 
     override fun layoutToInflate() = R.layout.activity_main
 

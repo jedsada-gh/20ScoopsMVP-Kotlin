@@ -25,8 +25,8 @@ class AndroidModule(var application: MyApplication) {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideSharedPreferences(): SharedPreferences =
             application.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
 

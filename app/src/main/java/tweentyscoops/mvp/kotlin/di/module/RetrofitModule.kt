@@ -5,13 +5,13 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
-import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import tweentyscoops.mvp.kotlin.configuration.BuildConfiguration
+import timber.log.Timber
+import tweentyscoops.mvp.kotlin.configuration.Config
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 class RetrofitModule {
 
     companion object {
-        const val TIME_OUT = 60
+        const val TIME_OUT = 60L
     }
 
     @Provides
@@ -32,42 +32,40 @@ class RetrofitModule {
             Cache(application.cacheDir, (10 * 1024 * 1024).toLong())
 
     @Provides
+    fun provideLogger(): HttpLoggingInterceptor =
+            HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { Timber.d(it); })
+
+    @Provides
     @Singleton
-    fun provideOkHttpClient(configuration: BuildConfiguration, cache: Cache,
-                            httpClient: OkHttpClient.Builder): OkHttpClient {
-        if (configuration.isDebug()) {
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            httpClient.addInterceptor(httpLoggingInterceptor)
+    fun provideClient(config: Config, logger: HttpLoggingInterceptor): OkHttpClient {
+        val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+        okHttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
+        if (config.isDebug()) {
+            logger.level = HttpLoggingInterceptor.Level.BODY
+            okHttpClientBuilder.addInterceptor(logger)
         }
-
-        httpClient.connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-                .readTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-                .writeTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .connectionPool(ConnectionPool(0, TIME_OUT.toLong(), TimeUnit.SECONDS))
-
-        httpClient.addInterceptor { chain ->
-            val original = chain.request()
-            val requestBuilder = original.newBuilder()
-            if (configuration.userToken() != null)
-                requestBuilder.header("Authorization", configuration.userToken())
-            requestBuilder.header("device", configuration.deviceType())
-            requestBuilder.header("app_version", configuration.version())
-            requestBuilder.method(original.method(), original.body())
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }
-        return httpClient.cache(cache).build()
+//        okHttpClientBuilder.addInterceptor { chain ->
+//            val original = chain.request()
+//            val requestBuilder = original.newBuilder()
+//            if (config.userToken() != null) requestBuilder.header("Authorization", config.userToken())
+//            requestBuilder.header("device", config.deviceType())
+//            requestBuilder.header("app_version", config.version())
+//            requestBuilder.method(original.method(), original.body())
+//            val request = requestBuilder.build()
+//            chain.proceed(request)
+//        }
+        return okHttpClientBuilder.build()
     }
 
-    @Singleton
     @Provides
-    fun provideRetrofit(configuration: BuildConfiguration, gson: Gson, httpClient: OkHttpClient): Retrofit =
+    @Singleton
+    fun provideRetrofit(config: Config, gson: Gson, okHttpClient: OkHttpClient): Retrofit =
             Retrofit.Builder()
-                    .baseUrl(configuration.endPoint())
+                    .baseUrl(config.endPoint())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient)
+                    .client(okHttpClient)
                     .build()
 }

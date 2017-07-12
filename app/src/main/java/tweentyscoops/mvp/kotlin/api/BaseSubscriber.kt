@@ -4,11 +4,11 @@ import io.reactivex.observers.DisposableObserver
 import retrofit2.Response
 import java.net.HttpURLConnection
 
-class BaseSubscriber<T>(var callback: ResponseCallback) : DisposableObserver<Response<T>>() {
+class BaseSubscriber<T>(val callback: ResponseCallback) : DisposableObserver<Response<T>>() {
 
     interface ResponseCallback : BaseResponseCallback {
         fun <T> onSuccess(t: T)
-        fun onError(message: String)
+        fun onError(message: String?)
     }
 
     override fun onNext(t: Response<T>) {
@@ -20,7 +20,7 @@ class BaseSubscriber<T>(var callback: ResponseCallback) : DisposableObserver<Res
     }
 
     override fun onError(e: Throwable) {
-        callback.onSuccess(e.message)
+        callback.onError(e.message)
     }
 
     override fun onComplete() {
