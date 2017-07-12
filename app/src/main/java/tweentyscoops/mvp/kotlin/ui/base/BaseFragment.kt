@@ -11,7 +11,6 @@ import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
 import javax.inject.Inject
 
-
 abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>> :
         Fragment(), BaseContract.View {
 
