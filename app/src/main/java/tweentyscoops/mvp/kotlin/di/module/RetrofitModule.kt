@@ -37,7 +37,7 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideClient(config: Config, logger: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(config: Config, logger: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         okHttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)

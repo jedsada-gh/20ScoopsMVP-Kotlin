@@ -42,6 +42,6 @@ infix fun ImageView.loadImage(url: String?) {
     Glide.with(this).setDefaultRequestOptions(requestOptions).load(url).into(this)
 }
 
-infix fun TextView.title(title: String?) {
+infix fun TextView.text(title: String?) {
     this.text = title
 }

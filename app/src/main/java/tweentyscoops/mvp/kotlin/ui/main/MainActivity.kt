@@ -5,10 +5,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
-import tweentyscoops.mvp.kotlin.extensions.hide
-import tweentyscoops.mvp.kotlin.extensions.loadImage
-import tweentyscoops.mvp.kotlin.extensions.title
-import tweentyscoops.mvp.kotlin.extensions.toast
+import tweentyscoops.mvp.kotlin.extensions.*
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 
 class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
@@ -38,7 +35,7 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
     }
 
     override fun setupView() {
-        tv_result title "Test Title"
+        tv_result text "Test Title"
         tv_result.hide()
         img_test loadImage "http://ainhoaweb.es/wp-content/uploads/2016/01/Gatos-y-perros-graciosos-26.jpg"
     }
