@@ -5,7 +5,7 @@ import android.view.View
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.ui.base.BaseFragment
 
-class TemplateFragment private constructor() : BaseFragment<TemplateContract.View, TemplatePresenter>(),
+class TemplateFragment : BaseFragment<TemplateContract.View, TemplatePresenter>(),
         TemplateContract.View {
 
     companion object {

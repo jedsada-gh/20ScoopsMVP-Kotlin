@@ -9,7 +9,7 @@ import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.ui.base.BaseFragment
 
-class MainFragment private constructor() : BaseFragment<MainContract.View, MainPresenter>(),
+class MainFragment : BaseFragment<MainContract.View, MainPresenter>(),
         MainContract.View {
 
     companion object {
