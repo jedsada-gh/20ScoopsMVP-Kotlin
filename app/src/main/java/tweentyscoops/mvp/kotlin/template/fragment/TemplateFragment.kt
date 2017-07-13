@@ -1,13 +1,22 @@
-package tweentyscoops.mvp.kotlin.ui.main
+package tweentyscoops.mvp.kotlin.template.fragment
 
 import android.os.Bundle
+import android.view.View
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
-import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
+import tweentyscoops.mvp.kotlin.ui.base.BaseFragment
 
-class TemplateActivity : BaseActivity<TemplateContract.View, TemplatePresenter>(),
+class TemplateFragment private constructor() : BaseFragment<TemplateContract.View, TemplatePresenter>(),
         TemplateContract.View {
 
-    override fun layoutToInflate() = 0
+    companion object {
+        fun newInstance(bundle: Bundle?): TemplateFragment {
+            val fragment = TemplateFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    override fun layoutToInflate(): Int = 0
 
     override fun doInjection(appComponent: ApplicationComponent) {
         appComponent.inject(this)
@@ -21,7 +30,7 @@ class TemplateActivity : BaseActivity<TemplateContract.View, TemplatePresenter>(
 
     }
 
-    override fun bindView() {
+    override fun bindView(view: View?) {
 
     }
 

@@ -34,7 +34,7 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
         super.onCreate(savedInstanceState)
         if (layoutToInflate() == 0) throw MvpNotSetLayoutException()
         setContentView(layoutToInflate())
-        doInjection((application as MyApplication).component())
+        doInjection(MyApplication.appComponent)
         presenter.attachView(this as V)
         bindView()
         setupInstance()

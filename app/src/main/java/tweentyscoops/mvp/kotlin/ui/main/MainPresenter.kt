@@ -2,6 +2,9 @@ package tweentyscoops.mvp.kotlin.ui.main
 
 import com.google.gson.Gson
 import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
+import com.hwangjr.rxbus.thread.EventThread
 import tweentyscoops.mvp.kotlin.api.BaseSubscriber
 import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.api.repository.GithupRepostitory
@@ -32,5 +35,10 @@ class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupR
 
     override fun onError(message: String?) {
         getView()?.showError(message)
+    }
+
+    @Subscribe(thread = EventThread.MAIN_THREAD, tags = arrayOf(Tag("text")))
+    fun heardText(message: String?) {
+        getView()?.updateText(message)
     }
 }

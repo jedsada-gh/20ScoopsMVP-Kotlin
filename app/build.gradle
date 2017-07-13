@@ -98,6 +98,10 @@ dependencies {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 configurations.all {
     resolutionStrategy {
         force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -5,10 +5,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
-import tweentyscoops.mvp.kotlin.extensions.*
+import tweentyscoops.mvp.kotlin.extensions.loadImage
+import tweentyscoops.mvp.kotlin.extensions.text
+import tweentyscoops.mvp.kotlin.extensions.toast
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
+import tweentyscoops.mvp.kotlin.ui.main.fragment.MainFragment
 
 class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContract.View {
+    override fun updateText(message: String?) {
+        tv_result text message
+    }
 
     override fun userInfoData(userInfo: UserInfoDao?) {
         toast(userInfo?.name!!)
@@ -16,7 +22,9 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
 
     override fun layoutToInflate() = R.layout.activity_main
 
-    override fun doInjection(appComponent: ApplicationComponent) = appComponent.inject(this)
+    override fun doInjection(appComponent: ApplicationComponent) {
+        appComponent.inject(this)
+    }
 
     override fun startView() {
 
@@ -28,6 +36,9 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
 
     override fun bindView() {
         presenter.requestUserInfo("pondthaitay")
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container_fragment, MainFragment.newInstance())
+                .commit()
     }
 
     override fun setupInstance() {
@@ -36,7 +47,6 @@ class MainActivity : BaseActivity<MainContract.View, MainPresenter>(), MainContr
 
     override fun setupView() {
         tv_result text "Test Title"
-        tv_result.hide()
         img_test loadImage "http://ainhoaweb.es/wp-content/uploads/2016/01/Gatos-y-perros-graciosos-26.jpg"
     }
 

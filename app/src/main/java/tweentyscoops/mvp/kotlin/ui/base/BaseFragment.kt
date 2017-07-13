@@ -34,7 +34,7 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (layoutToInflate() == 0) throw MvpNotSetLayoutException()
-        doInjection((activity.applicationContext as MyApplication).component())
+        doInjection(MyApplication.appComponent)
         presenter.attachView(this as V)
     }
 

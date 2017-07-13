@@ -11,6 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Matchers.anyString
+import org.mockito.Matchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
@@ -110,5 +111,11 @@ class MainPresenterTest {
         testObserver.assertNotComplete()
         testObserver.assertErrorMessage(throwable.message)
         testObserver.assertError(throwable)
+    }
+
+    @Test
+    fun heardText_test_should_be_test() {
+        presenter.heardText("test")
+        verify(mockView, times(1)).updateText(eq("test"))
     }
 }

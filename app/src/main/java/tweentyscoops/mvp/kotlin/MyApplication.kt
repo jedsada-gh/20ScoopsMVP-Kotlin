@@ -33,8 +33,6 @@ class MyApplication : Application() {
         super.onTerminate()
     }
 
-    fun component(): ApplicationComponent = appComponent
-
     private fun initDependenciesInjection() {
         appComponent = DaggerApplicationComponent.builder()
                 .retrofitModule(RetrofitModule())

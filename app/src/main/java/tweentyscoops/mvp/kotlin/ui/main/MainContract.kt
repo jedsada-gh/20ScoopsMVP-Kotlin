@@ -7,6 +7,7 @@ class MainContract {
 
     interface View : BaseContract.View {
         fun userInfoData(userInfo: UserInfoDao?)
+        fun updateText(message: String?)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

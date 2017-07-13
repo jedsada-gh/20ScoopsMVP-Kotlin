@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -34,14 +36,16 @@ inline fun <reified T : Activity> Activity.navigate(bundle: Bundle? = null) {
 }
 
 infix fun ImageView.loadImage(url: String?) {
-    val requestOptions = RequestOptions()
-    requestOptions.format(DecodeFormat.PREFER_ARGB_8888)
-    requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
-    requestOptions.error(android.R.color.darker_gray)
-    requestOptions.placeholder(android.R.color.darker_gray)
+    val requestOptions = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .error(android.R.color.darker_gray)
+            .placeholder(android.R.color.darker_gray)
     Glide.with(this).setDefaultRequestOptions(requestOptions).load(url).into(this)
 }
 
 infix fun TextView.text(title: String?) {
     this.text = title
 }
+
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
+        LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
