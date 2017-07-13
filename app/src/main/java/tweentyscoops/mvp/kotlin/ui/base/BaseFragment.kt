@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import tweentyscoops.mvp.kotlin.MyApplication
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.extensions.inflate
 import tweentyscoops.mvp.kotlin.ui.exception.MvpNotSetLayoutException
 import javax.inject.Inject
 
@@ -38,10 +39,8 @@ abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>
         presenter.attachView(this as V)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(layoutToInflate(), container, false)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            container?.inflate(layoutToInflate())
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
