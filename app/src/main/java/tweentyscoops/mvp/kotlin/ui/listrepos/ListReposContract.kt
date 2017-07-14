@@ -9,7 +9,7 @@ class ListReposContract {
         fun setListRepos(t: MutableList<UserRepos>?)
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Presenter : BaseContract.Presenter<View> {
         fun getUserRepos(username: String? = null)
     }
 }

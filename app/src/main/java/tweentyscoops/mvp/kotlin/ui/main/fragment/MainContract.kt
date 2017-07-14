@@ -8,7 +8,7 @@ class MainContract {
 
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Presenter : BaseContract.Presenter<View> {
         fun sendText(message: String?)
     }
 }

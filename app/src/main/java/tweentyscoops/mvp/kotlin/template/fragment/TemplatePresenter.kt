@@ -4,5 +4,5 @@ import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
 class TemplatePresenter @Inject constructor() : BasePresenter<TemplateContract.View>(),
-        TemplateContract.Presenter<TemplateContract.View> {
+        TemplateContract.Presenter {
 }

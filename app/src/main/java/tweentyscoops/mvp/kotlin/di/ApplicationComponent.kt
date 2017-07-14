@@ -4,10 +4,10 @@ import dagger.Component
 import tweentyscoops.mvp.kotlin.di.module.AndroidModule
 import tweentyscoops.mvp.kotlin.di.module.ApiModule
 import tweentyscoops.mvp.kotlin.di.module.RetrofitModule
+import tweentyscoops.mvp.kotlin.template.activity.TemplateActivity
 import tweentyscoops.mvp.kotlin.template.fragment.TemplateFragment
 import tweentyscoops.mvp.kotlin.ui.listrepos.ListReposActivity
 import tweentyscoops.mvp.kotlin.ui.main.MainActivity
-import tweentyscoops.mvp.kotlin.template.activity.TemplateActivity
 import tweentyscoops.mvp.kotlin.ui.main.fragment.MainFragment
 import javax.inject.Singleton
 
@@ -19,4 +19,5 @@ interface ApplicationComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(mainFragment: MainFragment)
     fun inject(listReposActivity: ListReposActivity)
+    fun inject(listReposActivity: tweentyscoops.mvp.kotlin.ui.listreposloadmore.ListReposActivity)
 }

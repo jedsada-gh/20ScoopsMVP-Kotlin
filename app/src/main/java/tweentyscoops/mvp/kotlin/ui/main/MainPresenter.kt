@@ -12,7 +12,7 @@ import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(val gson: Gson, val githubRepos: GithupRepostitory) :
-        BasePresenter<MainContract.View>(), MainContract.Presenter<MainContract.View>,
+        BasePresenter<MainContract.View>(), MainContract.Presenter,
         BaseSubscriber.ResponseCallback<UserInfoDao> {
 
     override fun requestUserInfo(username: String?) {

@@ -8,7 +8,7 @@ class TemplateContract {
 
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Presenter : BaseContract.Presenter<View> {
 
     }
 }

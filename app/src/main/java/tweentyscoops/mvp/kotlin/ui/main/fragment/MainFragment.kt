@@ -10,6 +10,7 @@ import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.extensions.navigate
 import tweentyscoops.mvp.kotlin.ui.base.BaseFragment
 import tweentyscoops.mvp.kotlin.ui.listrepos.ListReposActivity
+import tweentyscoops.mvp.kotlin.ui.viewpager.ViewPagerActivity
 
 class MainFragment : BaseFragment<MainContract.View, MainPresenter>(),
         MainContract.View {
@@ -51,9 +52,11 @@ class MainFragment : BaseFragment<MainContract.View, MainPresenter>(),
             }
         })
 
-        btn_list_repos.setOnClickListener {
-            activity.navigate<ListReposActivity>()
-        }
+        btn_view_pager.setOnClickListener { activity.navigate<ViewPagerActivity>() }
+
+        btn_list_repos_loadmore.setOnClickListener { activity.navigate<tweentyscoops.mvp.kotlin.ui.listreposloadmore.ListReposActivity>() }
+
+        btn_list_repos.setOnClickListener { activity.navigate<ListReposActivity>() }
     }
 
     override fun setupInstance() {

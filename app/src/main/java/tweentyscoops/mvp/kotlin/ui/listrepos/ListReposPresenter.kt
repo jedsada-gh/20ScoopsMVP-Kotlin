@@ -9,7 +9,7 @@ import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
 class ListReposPresenter @Inject constructor(val githubApi: GithubApi) : BasePresenter<ListReposContract.View>(),
-        ListReposContract.Presenter<ListReposContract.View>, BaseSubscriber.ResponseCallback<MutableList<UserRepos>> {
+        ListReposContract.Presenter, BaseSubscriber.ResponseCallback<MutableList<UserRepos>> {
 
     override fun onViewStart() {
         super.onViewStart()

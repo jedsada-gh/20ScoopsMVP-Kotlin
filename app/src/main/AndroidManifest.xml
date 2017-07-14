@@ -28,6 +28,8 @@
             android:value="AppGlideModule" />
 
         <activity android:name=".ui.listrepos.ListReposActivity" />
+        <activity android:name=".ui.listreposloadmore.ListReposActivity" />
+        <activity android:name=".ui.viewpager.ViewPagerActivity" />
     </application>
 
 </manifest>

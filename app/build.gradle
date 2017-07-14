@@ -60,7 +60,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:' + rootProject.ext.hamcrest_version
     testCompile 'org.powermock:powermock-api-mockito:' + rootProject.ext.powermock_version
     testCompile 'org.powermock:powermock-module-junit4:' + rootProject.ext.powermock_version
@@ -74,7 +73,6 @@ dependencies {
 
     compile 'com.google.dagger:dagger:' + rootProject.ext.dagger2_version
     kapt 'com.google.dagger:dagger-compiler:' + rootProject.ext.dagger2_version
-    provided 'javax.annotation:jsr250-api:1.0'
 
     compile 'com.google.code.gson:gson:' + rootProject.ext.gson_version
     compile 'io.reactivex.rxjava2:rxandroid:' + rootProject.ext.rx_android_version
@@ -83,9 +81,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:' + rootProject.ext.retrofit_version
     compile 'com.squareup.retrofit2:converter-gson:' + rootProject.ext.retrofit_version
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + rootProject.ext.retrofit_version
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
-    compile 'com.jakewharton.timber:timber:4.5.1'
 
     compile 'org.parceler:parceler-api:' + rootProject.ext.parceler_version
     kapt 'org.parceler:parceler:' + rootProject.ext.parceler_version
@@ -96,7 +92,12 @@ dependencies {
     compile('com.hwangjr.rxbus:rxbus:2.0.0') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'com.karumi:dexter:4.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    provided 'javax.annotation:jsr250-api:1.0'
 }
 
 kapt {

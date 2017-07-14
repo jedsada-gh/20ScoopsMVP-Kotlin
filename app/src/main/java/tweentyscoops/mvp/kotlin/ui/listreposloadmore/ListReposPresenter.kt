@@ -1,10 +1,10 @@
-package tweentyscoops.mvp.kotlin.template.activity
+package tweentyscoops.mvp.kotlin.ui.listreposloadmore
 
 import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
-class TemplatePresenter @Inject constructor() : BasePresenter<TemplateContract.View>(),
-        TemplateContract.Presenter {
+class ListReposPresenter @Inject constructor() : BasePresenter<ListReposContract.View>(),
+        ListReposContract.Presenter {
 
     override fun onViewStart() {
         super.onViewStart()

@@ -10,7 +10,7 @@ class MainContract {
         fun updateText(message: String?)
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Presenter : BaseContract.Presenter<View> {
         fun requestUserInfo(username: String?)
     }
 }
