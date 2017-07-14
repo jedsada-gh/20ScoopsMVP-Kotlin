@@ -1,21 +1,24 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter
 
 import android.support.v7.widget.RecyclerView
-import javax.inject.Inject
 
-abstract class BaseListAdapter<VH : BaseViewHolder, A : BaseListAdapterContract.Adapter,
+@Suppress("LeakingThis")
+abstract class BaseListAdapter<VH : BaseViewHolder, in A : BaseListAdapterContract.Adapter,
         P : BaseListAdapterContract.Presenter<A>> : RecyclerView.Adapter<VH>(),
         BaseListAdapterContract.Adapter {
 
-    @Inject lateinit var presenter: P
-    @Inject lateinit var adapter: A
-
-    protected interface OnLoadMoreListener {
+    interface OnLoadMoreListener {
         fun onLoadMore()
     }
 
+    protected var presenter: P
+
+    abstract fun createPresenter(): P
+
     init {
-        presenter.setAdapter(adapter)
+        presenter = createPresenter()
+        @Suppress("UNCHECKED_CAST")
+        presenter.setAdapter(this as A)
     }
 
     fun getItems(): MutableList<BaseItem> = presenter.getItems()

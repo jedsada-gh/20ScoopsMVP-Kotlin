@@ -7,9 +7,8 @@ class BaseListAdapterContract {
         fun notifyItemRemoved(index: Int)
     }
 
-    interface Presenter<A : BaseListAdapterContract.Adapter> {
+    interface Presenter<in A : BaseListAdapterContract.Adapter> {
         fun setAdapter(adapter: A)
-        fun getAdapter(): A?
         fun getItemViewType(pos: Int): Int
         fun getItemCount(): Int
         fun hasItems(): Boolean

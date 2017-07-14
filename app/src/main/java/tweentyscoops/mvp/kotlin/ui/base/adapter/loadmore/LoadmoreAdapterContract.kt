@@ -1,5 +1,6 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter.loadmore
 
+import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseItem
 import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseListAdapterContract
 
 class LoadmoreAdapterContract {
@@ -8,7 +9,7 @@ class LoadmoreAdapterContract {
 
     }
 
-    interface Presenter<A : BaseListAdapterContract.Adapter> : BaseListAdapterContract.Presenter<A> {
-
+    interface Presenter<in A : BaseListAdapterContract.Adapter> : BaseListAdapterContract.Presenter<A> {
+        fun setItems(items: MutableList<BaseItem>, isNextItemAvailable: Boolean)
     }
 }
