@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import tweentyscoops.mvp.kotlin.ui.base.adapter.*
 import tweentyscoops.mvp.kotlin.ui.base.adapter.progress.ProgressViewHolder
 
-abstract class LoadmoreAdapter<VH : BaseViewHolder, A : BaseListAdapterContract.Adapter,
+abstract class LoadmoreAdapter<VH : BaseViewHolder, in A : BaseListAdapterContract.Adapter,
         P : LoadmoreAdapterContract.Presenter<A>> : BaseListAdapter<VH, A, P>(),
         LoadmoreAdapterContract.Adapter {
 
@@ -14,8 +14,9 @@ abstract class LoadmoreAdapter<VH : BaseViewHolder, A : BaseListAdapterContract.
         this.callback = callback
     }
 
-    fun setItems(items: MutableList<BaseItem>, isNextItemAvailable: Boolean) =
-            presenter.setItems(items, isNextItemAvailable)
+    fun setItems(items: List<BaseItem>?, isNextItemAvailable: Boolean) {
+        presenter.setItems(items, isNextItemAvailable)
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH? {

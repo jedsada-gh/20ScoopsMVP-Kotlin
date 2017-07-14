@@ -14,7 +14,7 @@ class BaseListAdapterContract {
         fun hasItems(): Boolean
         fun getItems(): MutableList<BaseItem>
         fun getItem(pos: Int): BaseItem
-        fun setItems(items: MutableList<BaseItem>)
+        fun setItems(items: List<BaseItem>?)
         fun addItem(item: BaseItem)
         fun removeItem(index: Int)
         fun removeAllItems()

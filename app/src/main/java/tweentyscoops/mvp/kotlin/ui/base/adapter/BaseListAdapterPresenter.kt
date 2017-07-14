@@ -22,8 +22,8 @@ abstract class BaseListAdapterPresenter<in A : BaseListAdapterContract.Adapter> 
 
     override fun getItem(pos: Int) = items[pos]
 
-    override fun setItems(items: MutableList<BaseItem>) {
-        this.items = items
+    override fun setItems(items: List<BaseItem>?) {
+        this.items = items!!.toMutableList()
         adapter?.get()?.notifyDataSetChanged()
     }
 

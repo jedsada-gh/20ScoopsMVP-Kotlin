@@ -7,7 +7,9 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_main.*
 import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
+import tweentyscoops.mvp.kotlin.extensions.navigate
 import tweentyscoops.mvp.kotlin.ui.base.BaseFragment
+import tweentyscoops.mvp.kotlin.ui.listrepos.ListReposActivity
 
 class MainFragment : BaseFragment<MainContract.View, MainPresenter>(),
         MainContract.View {
@@ -48,6 +50,10 @@ class MainFragment : BaseFragment<MainContract.View, MainPresenter>(),
                 presenter.sendText(p0.toString())
             }
         })
+
+        btn_list_repos.setOnClickListener {
+            activity.navigate<ListReposActivity>()
+        }
     }
 
     override fun setupInstance() {

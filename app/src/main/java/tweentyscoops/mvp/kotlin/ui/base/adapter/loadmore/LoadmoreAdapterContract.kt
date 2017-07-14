@@ -10,6 +10,6 @@ class LoadmoreAdapterContract {
     }
 
     interface Presenter<in A : BaseListAdapterContract.Adapter> : BaseListAdapterContract.Presenter<A> {
-        fun setItems(items: MutableList<BaseItem>, isNextItemAvailable: Boolean)
+        fun setItems(items: List<BaseItem>?, isNextItemAvailable: Boolean)
     }
 }

@@ -1,4 +1,4 @@
-package tweentyscoops.mvp.kotlin.ui.main
+package tweentyscoops.mvp.kotlin.template.activity
 
 import android.os.Bundle
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent

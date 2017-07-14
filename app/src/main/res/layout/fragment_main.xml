@@ -10,4 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_list_repos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="navigate to list repos" />
+
 </LinearLayout>
