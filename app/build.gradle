@@ -96,6 +96,7 @@ dependencies {
     compile('com.hwangjr.rxbus:rxbus:2.0.0') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
+    compile 'com.karumi:dexter:4.1.0'
 }
 
 kapt {
