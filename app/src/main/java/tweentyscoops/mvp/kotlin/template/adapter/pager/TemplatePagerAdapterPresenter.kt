@@ -1,4 +1,4 @@
-package tweentyscoops.mvp.kotlin.template.adapter
+package tweentyscoops.mvp.kotlin.template.adapter.pager
 
 import java.lang.ref.WeakReference
 

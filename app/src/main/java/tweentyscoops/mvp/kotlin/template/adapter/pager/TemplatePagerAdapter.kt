@@ -1,4 +1,4 @@
-package tweentyscoops.mvp.kotlin.template.adapter
+package tweentyscoops.mvp.kotlin.template.adapter.pager
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
