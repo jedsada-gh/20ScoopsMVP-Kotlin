@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import tweentyscoops.mvp.kotlin.api.model.UserInfoDao
-import tweentyscoops.mvp.kotlin.api.model.UserRepos
+import tweentyscoops.mvp.kotlin.api.model.UserReposDao
 
 interface GithubApi {
     @GET("users/{username}")
@@ -14,5 +14,5 @@ interface GithubApi {
 
     @GET("users/{username}/repos")
     fun getUnserRepos(@Path("username") username: String? = "pondthaitay"):
-            Observable<Response<MutableList<UserRepos>>>
+            Observable<Response<MutableList<UserReposDao>>>
 }

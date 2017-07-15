@@ -3,13 +3,13 @@ package tweentyscoops.mvp.kotlin.ui.listrepos
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import tweentyscoops.mvp.kotlin.api.BaseSubscriber
-import tweentyscoops.mvp.kotlin.api.model.UserRepos
+import tweentyscoops.mvp.kotlin.api.model.UserReposDao
 import tweentyscoops.mvp.kotlin.api.repository.GithubApi
 import tweentyscoops.mvp.kotlin.ui.base.BasePresenter
 import javax.inject.Inject
 
 class ListReposPresenter @Inject constructor(val githubApi: GithubApi) : BasePresenter<ListReposContract.View>(),
-        ListReposContract.Presenter, BaseSubscriber.ResponseCallback<MutableList<UserRepos>> {
+        ListReposContract.Presenter, BaseSubscriber.ResponseCallback<MutableList<UserReposDao>> {
 
     override fun onViewStart() {
         super.onViewStart()
@@ -25,7 +25,7 @@ class ListReposPresenter @Inject constructor(val githubApi: GithubApi) : BasePre
                 .subscribe(BaseSubscriber(this))
     }
 
-    override fun onSuccess(t: MutableList<UserRepos>?) {
+    override fun onSuccess(t: MutableList<UserReposDao>?) {
         getView()?.setListRepos(t)
     }
 

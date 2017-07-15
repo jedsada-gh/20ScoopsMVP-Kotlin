@@ -17,16 +17,13 @@ abstract class LoadmoreAdapter<VH : BaseViewHolder, in A : LoadmoreAdapterContra
         this.callback = callback
     }
 
-    fun setItems(items: List<BaseItem>?, isNextItemAvailable: Boolean) {
-        presenter.setItems(items, isNextItemAvailable)
-    }
+    fun setItems(items: List<BaseItem>?, isNextItemAvailable: Boolean) =
+            presenter.setItems(items, isNextItemAvailable)
 
     @Suppress("UNCHECKED_CAST")
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH? {
-        if (viewType == BaseItemType.TYPE_PROGRESS) {
-            return ProgressViewHolder(parent) as VH
-        }
-        return null
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH? = when (viewType) {
+        BaseItemType.TYPE_PROGRESS -> ProgressViewHolder(parent) as VH
+        else -> null
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {

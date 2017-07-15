@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_list_repos.*
 import tweentyscoops.mvp.kotlin.R
-import tweentyscoops.mvp.kotlin.api.model.UserRepos
+import tweentyscoops.mvp.kotlin.api.model.UserReposDao
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
 import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseListAdapter
@@ -17,7 +17,7 @@ class ListReposActivity : BaseActivity<ListReposContract.View, ListReposPresente
 
     }
 
-    override fun setListRepos(t: MutableList<UserRepos>?) {
+    override fun setListRepos(t: MutableList<UserReposDao>?) {
         adapterListRepos?.setItems(t)
     }
 

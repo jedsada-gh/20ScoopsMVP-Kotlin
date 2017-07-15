@@ -93,10 +93,7 @@ dependencies {
     }
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.orhanobut:logger:2.1.1'
-    compile 'com.karumi:dexter:4.1.0'
     provided 'javax.annotation:jsr250-api:1.0'
-    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
-    compile 'com.akexorcist:localizationactivity:1.1.2'
 }
 
 kapt {

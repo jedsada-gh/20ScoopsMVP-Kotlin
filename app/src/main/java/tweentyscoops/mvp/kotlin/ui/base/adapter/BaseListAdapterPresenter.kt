@@ -1,6 +1,5 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter
 
-import com.orhanobut.logger.Logger
 import java.lang.ref.WeakReference
 
 abstract class BaseListAdapterPresenter<in A : BaseListAdapterContract.Adapter> :
@@ -13,23 +12,18 @@ abstract class BaseListAdapterPresenter<in A : BaseListAdapterContract.Adapter> 
         this.adapter = WeakReference<A>(adapter)
     }
 
-    override fun getItemViewType(pos: Int): Int {
-        Logger.d(items[pos].type.toString())
-        return items[pos].type
-    }
+    override fun getItemViewType(pos: Int): Int = items[pos].type
 
-    override fun getItemCount(): Int {
-        Logger.d(items.size.toString())
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
-    override fun hasItems() = !items.isEmpty()
+    override fun hasItems(): Boolean = !items.isEmpty()
 
     override fun getItems(): MutableList<BaseItem> = items
 
-    override fun getItem(pos: Int) = items[pos]
+    override fun getItem(pos: Int): BaseItem = items[pos]
 
     override fun setItems(items: List<BaseItem>?) {
+        //TODO : fix to safe change to mutablelist
         this.items = items!!.toMutableList()
         adapter?.get()?.notifyDataSetChanged()
     }
