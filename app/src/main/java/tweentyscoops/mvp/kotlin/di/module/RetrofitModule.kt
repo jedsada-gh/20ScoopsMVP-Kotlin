@@ -5,12 +5,13 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
+import tweentyscoops.mvp.kotlin.api.HttpLogger
 import tweentyscoops.mvp.kotlin.configuration.Config
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -32,20 +33,20 @@ class RetrofitModule {
             Cache(application.cacheDir, (10 * 1024 * 1024).toLong())
 
     @Provides
-    fun provideLogger(): HttpLoggingInterceptor =
-            HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { Timber.d(it); })
+    fun provideHttpLogger(config: Config, gson: Gson): HttpLoggingInterceptor = when (config.isDebug()) {
+        true -> HttpLoggingInterceptor(HttpLogger(gson)).setLevel(HttpLoggingInterceptor.Level.BODY)
+        else -> HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+    }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(config: Config, logger: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(logger: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
-        okHttpClientBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
+        okHttpClientBuilder.addInterceptor(logger)
+                .certificatePinner(CertificatePinner.DEFAULT)
+                .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
-        if (config.isDebug()) {
-            logger.level = HttpLoggingInterceptor.Level.BODY
-            okHttpClientBuilder.addInterceptor(logger)
-        }
 //        okHttpClientBuilder.addInterceptor { chain ->
 //            val original = chain.request()
 //            val requestBuilder = original.newBuilder()

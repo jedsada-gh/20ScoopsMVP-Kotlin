@@ -1,5 +1,6 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter
 
+import com.orhanobut.logger.Logger
 import java.lang.ref.WeakReference
 
 abstract class BaseListAdapterPresenter<in A : BaseListAdapterContract.Adapter> :
@@ -12,9 +13,15 @@ abstract class BaseListAdapterPresenter<in A : BaseListAdapterContract.Adapter> 
         this.adapter = WeakReference<A>(adapter)
     }
 
-    override fun getItemViewType(pos: Int) = items[pos].type
+    override fun getItemViewType(pos: Int): Int {
+        Logger.d(items[pos].type.toString())
+        return items[pos].type
+    }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int {
+        Logger.d(items.size.toString())
+        return items.size
+    }
 
     override fun hasItems() = !items.isEmpty()
 

@@ -1,10 +1,13 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter.loadmore
 
 import android.view.ViewGroup
-import tweentyscoops.mvp.kotlin.ui.base.adapter.*
+import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseItem
+import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseItemType
+import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseListAdapter
+import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseViewHolder
 import tweentyscoops.mvp.kotlin.ui.base.adapter.progress.ProgressViewHolder
 
-abstract class LoadmoreAdapter<VH : BaseViewHolder, in A : BaseListAdapterContract.Adapter,
+abstract class LoadmoreAdapter<VH : BaseViewHolder, in A : LoadmoreAdapterContract.Adapter,
         P : LoadmoreAdapterContract.Presenter<A>> : BaseListAdapter<VH, A, P>(),
         LoadmoreAdapterContract.Adapter {
 

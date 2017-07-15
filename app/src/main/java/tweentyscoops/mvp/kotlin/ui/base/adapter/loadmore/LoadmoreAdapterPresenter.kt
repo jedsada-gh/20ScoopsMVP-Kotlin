@@ -1,6 +1,6 @@
 package tweentyscoops.mvp.kotlin.ui.base.adapter.loadmore
 
-import timber.log.Timber
+import com.orhanobut.logger.Logger
 import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseItem
 import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseItemType
 import tweentyscoops.mvp.kotlin.ui.base.adapter.BaseListAdapterPresenter
@@ -16,13 +16,13 @@ abstract class LoadmoreAdapterPresenter<in A : LoadmoreAdapterContract.Adapter> 
         this.isNextItemAvailable = this.isNextItemAvailable
     }
 
-    override fun getItemViewType(pos: Int) = when (pos >= super.getItemCount()) {
+    override fun getItemViewType(pos: Int): Int = when (pos >= super.getItemCount()) {
         true -> {
-            Timber.d("true $pos")
+            Logger.d("true $pos")
             BaseItemType.TYPE_PROGRESS
         }
         else -> {
-            Timber.d("false $pos")
+            Logger.d("false $pos")
             super.getItemViewType(pos)
         }
     }
@@ -33,7 +33,7 @@ abstract class LoadmoreAdapterPresenter<in A : LoadmoreAdapterContract.Adapter> 
         return count
     }
 
-    override fun getItem(pos: Int) = when (pos >= super.getItemCount()) {
+    override fun getItem(pos: Int): BaseItem = when (pos >= super.getItemCount()) {
         true -> ProgressItem()
         else -> super.getItem(pos)
     }

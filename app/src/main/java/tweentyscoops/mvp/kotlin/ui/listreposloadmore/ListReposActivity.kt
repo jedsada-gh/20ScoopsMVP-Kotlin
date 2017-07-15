@@ -1,48 +1,54 @@
 package tweentyscoops.mvp.kotlin.ui.listreposloadmore
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_list_repos_load_more.*
+import tweentyscoops.mvp.kotlin.R
 import tweentyscoops.mvp.kotlin.di.ApplicationComponent
 import tweentyscoops.mvp.kotlin.ui.base.BaseActivity
+import tweentyscoops.mvp.kotlin.ui.listreposloadmore.adapter.ListLoadMoreReposAdapter
 
 class ListReposActivity : BaseActivity<ListReposContract.View, ListReposPresenter>(),
         ListReposContract.View {
-    override fun layoutToInflate(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
+    override fun layoutToInflate() = R.layout.activity_list_repos_load_more
 
     override fun doInjection(appComponent: ApplicationComponent) {
         appComponent.inject(this)
     }
 
     override fun startView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun stopView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun bindView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val adapter = ListLoadMoreReposAdapter()
+        list_repos.layoutManager = LinearLayoutManager(this)
+        list_repos.adapter = adapter
+        list_repos.setHasFixedSize(false)
     }
 
     override fun setupInstance() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun setupView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun initialize() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun saveInstanceState(outState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun restoreView(savedInstanceState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

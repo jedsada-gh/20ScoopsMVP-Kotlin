@@ -82,7 +82,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:' + rootProject.ext.retrofit_version
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + rootProject.ext.retrofit_version
 
-
     compile 'org.parceler:parceler-api:' + rootProject.ext.parceler_version
     kapt 'org.parceler:parceler:' + rootProject.ext.parceler_version
 
@@ -93,11 +92,11 @@ dependencies {
         exclude group: 'com.jakewharton.timber', module: 'timber'
     }
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.jakewharton.timber:timber:4.5.1'
+    compile 'com.orhanobut:logger:2.1.1'
     compile 'com.karumi:dexter:4.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+    compile 'com.akexorcist:localizationactivity:1.1.2'
 }
 
 kapt {
